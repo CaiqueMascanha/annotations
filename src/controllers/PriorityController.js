@@ -10,6 +10,18 @@ module.exports = {
     },
 
     async update(req, res) {
-        
+        const { id } = req.params;
+
+        const annotations = await Annotations.findOne({ _id: id });
+
+        if (annotations.priority) {
+            annotations.priority = false
+        } else {
+            annotations.priority = true
+        }
+
+        await annotations.save();
+
+        return res.json(annotations);
     }
 };
